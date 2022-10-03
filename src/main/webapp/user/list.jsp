@@ -18,9 +18,17 @@
     <a href="/users?action=create">Add New User</a>
   </h2>
 </center>
+<form class="form-group search-form" action="/users" method="post">
+<input name="search" class="form-control search-input" type="text" placeholder="Type something to search">
+<input type="hidden" name="action" value="searchBy">
+<button type="submit" class="btn btn-primary search-btn">Seacrh</button>
+<a href="/users?action=create"
+   class="btn btn-primary search-btn">Add</a>
+<a href="/users" class="btn btn-primary search-btn">Menu</a>
+
 <div align="center">
-  <table border="1" cellpadding="5">
-    <caption><h2>List of Users</h2></caption>
+<caption><h2>List of Users</h2></caption>
+<table border="1" cellpadding="5" class="table">
     <tr>
       <th>ID</th>
       <th>Name</th>
@@ -30,18 +38,19 @@
     </tr>
     <c:forEach var="user" items="${listUser}">
       <tr>
-        <td><c:out value="${user.getId()}"/></td>
-        <td><c:out value="${user.getName()}"/></td>
+      <c:forEach var="user" items="${requestScope['listUser']}">
+        <td><a href="/users?action=view&id=${user.getId()}">${user.getName()}</a></td>
         <td><c:out value="${user.getEmail()}"/></td>
         <td><c:out value="${user.getCountry()}"/></td>
         <td>
           <a href="/users?action=edit&id=${user.getId()}">Edit</a>
           <a href="/users?action=delete&id=${user.getId()}">Delete</a>
         </td>
-      </tr>
-    </c:forEach>
-  </table>
-</div>
-
-</body>
-</html>
+        </tr>
+      </c:forEach>
+  </c:forEach>
+      </div>
+</form>
+      </body>
+      </html>
+      </table>

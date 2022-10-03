@@ -59,6 +59,11 @@ public class UserServlet extends HttpServlet {
                 case "edit":
                     updateUser(request, response);
                     break;
+                case "searchBy" :
+                    searchByCountry(request, response);
+                    break;
+                default:
+                    listUser(request, response);
             }
         } catch (SQLException ex) {
             throw new ServletException(ex);
@@ -121,5 +126,14 @@ public class UserServlet extends HttpServlet {
         request.setAttribute("listUser", listUser);
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/list.jsp");
         dispatcher.forward(request, response);
+    }
+    private void searchByCountry(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException,IOException,ServletException{
+        String country = request.getParameter("search");
+        List<User> users = userDAO.searchByCountry(country);
+        request.setAttribute("listUser", users);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("user/list.jsp");
+        requestDispatcher.forward(request, response);
+
     }
 }
