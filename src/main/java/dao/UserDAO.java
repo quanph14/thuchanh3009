@@ -22,7 +22,7 @@ public class UserDAO implements IUserDAO {
     protected Connection getConnection() {
         Connection connection = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
         } catch (SQLException e) {
             // TODO Auto-generated catch block
@@ -72,6 +72,10 @@ public class UserDAO implements IUserDAO {
         return user;
     }
 
+    public static void main(String[] args) {
+        UserDAO userDAO = new UserDAO();
+        userDAO.selectAllUsers();
+    }
     public List<User> selectAllUsers() {
 
         // using try-with-resources to avoid closing resources (boiler plate code)
